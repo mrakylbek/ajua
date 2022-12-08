@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:ajua_namaz_1/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 Color green = const Color(0xff009DBF);
@@ -20,52 +23,78 @@ class _BottomNavBarState extends State<BottomNavBar> {
       BottomNavigationBarItem(
         icon: Container(
           margin: EdgeInsets.only(right: (maxW - 40 - 100) / 2),
-          child: Icon(
-            Icons.compass_calibration_sharp,
-            // Icons.account_circle,
-            // size: 18,
-            color: green,
+          child: Container(
+            width: 30,
+            height: 30,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/compas_icon.png'),
+                fit: BoxFit.contain,
+              ),
+            ),
           ),
+          // Icon(
+          //   Icons.compass_calibration_sharp,
+          //   // Icons.account_circle,
+          //   // size: 18,
+          //   color: green,
+          // ),
         ),
         label: 'Home',
       ),
       BottomNavigationBarItem(
         icon: Container(
           margin: EdgeInsets.only(left: (maxW - 40 - 100) / 2),
-          child: Icon(
-            Icons.account_circle,
-            color: green,
-            // size: 18,
+          child: Container(
+            width: 30,
+            height: 30,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/settings_icon.png'),
+                fit: BoxFit.contain,
+              ),
+            ),
           ),
+          // Icon(
+          //   Icons.account_circle,
+          //   color: green,
+          //   // size: 18,
+          // ),
         ),
         label: 'Home',
       ),
     ];
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20),
-      height: 60,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: BottomNavigationBar(
-        currentIndex: 1,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        elevation: 2,
-        backgroundColor: Colors.white,
-        // type: BottomNavigationBarType.fixed,
-        onTap: (value) {
-          setState(() {
-            // selectedI = value;
-          });
-        },
-        iconSize: 30,
-        items: navItems.map((it) {
-          return it;
-        }).toList(),
-        // selectedIconTheme: IconThemeData(size: 30),
+      padding: const EdgeInsets.fromLTRB(15, 8, 15, 10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(25),
+        child: Container(
+          // margin: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20),
+          height: 54,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(25),
+          ),
+          child: BottomNavigationBar(
+            currentIndex: 1,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            elevation: 0,
+            backgroundColor: white,
+            type: BottomNavigationBarType.fixed,
+            onTap: (value) {
+              setState(() {
+                // selectedI = value;
+              });
+            },
+            iconSize: 30,
+            items: navItems.map((it) {
+              return it;
+            }).toList(),
+            // selectedIconTheme: IconThemeData(size: 30),
+          ),
+        ),
       ),
     );
 

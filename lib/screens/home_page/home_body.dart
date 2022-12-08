@@ -1,14 +1,14 @@
-import 'package:ajua_namaz_1/carousel_clider.dart';
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
-import 'bottomNavBar.dart';
+import 'package:ajua_namaz_1/constants/textStyles.dart';
+import 'package:ajua_namaz_1/screens/home_page/alert_nachat.dart';
+import 'package:ajua_namaz_1/screens/home_page/alert_vremya.dart';
+import 'package:ajua_namaz_1/screens/home_page/carousel_clider.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
+// import '../bottomNavBar.dart';
+import '../../constants/colors.dart';
 
 TextStyle ts = const TextStyle(
   fontSize: 14,
@@ -16,48 +16,60 @@ TextStyle ts = const TextStyle(
   color: Color(0xff333333),
 );
 // Color green = const Color(0xff00CF91);
-Color green = const Color(0xff009DBF);
 List vremya = ['Фаджр', 'Восход', 'Зухр', 'Аср', 'Магриб', 'Иша'];
 bool turn = true;
 
-class _HomePageState extends State<HomePage> {
+class HomeBody extends StatefulWidget {
+  const HomeBody({super.key});
+
+  @override
+  State<HomeBody> createState() => _HomeBodyState();
+}
+
+class _HomeBodyState extends State<HomeBody> {
   @override
   Widget build(BuildContext context) {
     double maxWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      backgroundColor: const Color(0xffF9F9F9),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            appBar(),
-            Container(
-              height: 467,
-              margin: EdgeInsets.only(bottom: 30, top: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [firstColumn(maxWidth), secondColumn(maxWidth)],
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              // appBar2(),
+              Container(
+                // height: 467,
+                // color: Colors.green,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [firstColumn(maxWidth), secondColumn(maxWidth)],
+                ),
               ),
-            ),
-            CarouselBody(tile_body: carousel_tile()),
-          ],
+              CarouselBody(tile_body: carousel_tile()),
+              // Container(
+              //   width: 150,
+              //   height: 200,
+              //   color: Colors.yellow,
+              // ),
+            ],
+          ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
     );
   }
 
   Container carousel_tile() {
     return Container(
       // height: 120,
+      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 5),
+      margin: EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-      margin: EdgeInsets.symmetric(vertical: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,34 +79,37 @@ class _HomePageState extends State<HomePage> {
             height: 109,
             decoration: BoxDecoration(
                 image: DecorationImage(
-              image: AssetImage('images/ramadan.png'),
+              image: AssetImage('assets/images/ramadan.png'),
               fit: BoxFit.contain,
             )),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Рамаданга',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black,
-                  fontFamily: 'Open Sans',
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Рамаданга',
+                  maxLines: 2,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                    fontFamily: 'Open Sans',
+                  ),
                 ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                '92 кун калды',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: green,
-                  fontFamily: 'Open Sans',
+                SizedBox(height: 8),
+                Text(
+                  '92 кун калды',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: blue,
+                    fontFamily: 'Open Sans',
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           SizedBox(width: 15)
         ],
@@ -102,17 +117,20 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Stack secondColumn(double maxWidth) {
-    return Stack(
+  Widget secondColumn(double maxWidth) {
+    return Column(
       children: [
-        Icon(
-          Icons.mosque,
-          color: Colors.grey[300],
-          size: (maxWidth - 40 - 20 - 10) / 2,
+        SizedBox(
+          width: (maxWidth - 40 - 25) / 2,
+          child: Image(
+            image: AssetImage('assets/images/mosque_2.png'),
+            fit: BoxFit.contain,
+          ),
         ),
         Container(
-          margin: EdgeInsets.only(top: (maxWidth - 140) / 2),
-          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+          // margin: EdgeInsets.only(top: (maxWidth - 140) / 2),
+          // margin: EdgeInsets.only(top: (maxWidth - 100) / 2),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: Colors.white,
@@ -126,29 +144,41 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(
-                  vremya.length, (index) => vremya_tile(index, maxWidth))),
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(
+              vremya.length,
+              (index) => vremya_tile(index, maxWidth),
+            ),
+          ),
         )
       ],
     );
   }
 
-  Container vremya_tile(int i, double maxWidth) {
+  Widget vremya_tile(int i, double maxWidth) {
     return Container(
       // margin: ,
       width: (maxWidth - 40 - 12) / 2,
-
+      margin: EdgeInsets.symmetric(vertical: 3),
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            vremya[i],
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: i != 0 ? const Color(0xff011627) : green,
+          InkWell(
+            onTap: () {
+              showGeneralDialog(
+                context: context,
+                pageBuilder: (((context, animation, secondaryAnimation) =>
+                    AlertVremyaNamaz())),
+              );
+            },
+            child: Text(
+              vremya[i],
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: i != 0 ? const Color(0xff011627) : blue,
+              ),
             ),
           ),
           Container(
@@ -158,8 +188,8 @@ class _HomePageState extends State<HomePage> {
                 image: DecorationImage(
               image: AssetImage(
                 i == 0
-                    ? 'images/sound_off_green.png'
-                    : 'images/sound_off_black.png',
+                    ? 'assets/images/sound_off_green.png'
+                    : 'assets/images/sound_off_black.png',
               ),
               fit: BoxFit.contain,
             )),
@@ -169,29 +199,24 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Stack firstColumn(double maxWidth) {
-    return Stack(
+  Widget firstColumn(double maxWidth) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          // width: (maxWidth - 40 - 20 - 10) / 2,
-          // height: 120,
-          // color: Colors.grey[400],
-          // color: Colors.yellow,
-          child: Icon(
-            Icons.mosque,
-            color: Colors.grey[300],
-            size: (maxWidth - 40 - 20 - 10) / 2,
+        SizedBox(
+          width: (maxWidth - 40 - 25) / 2,
+          child: Image(
+            image: AssetImage('assets/images/mosque_1.png'),
+            fit: BoxFit.contain,
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(top: (maxWidth - 140) / 2),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              fajr(maxWidth),
-              time(maxWidth),
-            ],
-          ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            fajr(maxWidth),
+            SizedBox(height: 14),
+            time(maxWidth),
+          ],
         )
       ],
     );
@@ -226,7 +251,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Icon(
                   Icons.access_time,
-                  color: green,
+                  color: blue,
                   size: 24,
                 ),
                 Switch(
@@ -256,7 +281,7 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 16),
               Text(
                 'Время до намаза ',
                 style: TextStyle(
@@ -265,6 +290,7 @@ class _HomePageState extends State<HomePage> {
                   color: Color(0xffB9B9B9),
                 ),
               ),
+              SizedBox(height: 4),
             ],
           )
         ],
@@ -292,21 +318,21 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Icon(
-          //   Icons.mosque,
-          //   color: green,
-          //   size: 24,
-          // ),
           Container(
             width: 24,
             height: 24,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage('images/mosque_icon.png'),
+            margin: EdgeInsets.only(bottom: 12),
+            // decoration: BoxDecoration(
+            //     image: DecorationImage(
+            //   image: AssetImage('assets/images/mosque_icon.png'),
+            //   fit: BoxFit.contain,
+            // )),
+            child: Image(
+              image: AssetImage('assets/images/mosque_icon.png'),
               fit: BoxFit.contain,
-            )),
+            ),
           ),
-          SizedBox(height: 24),
+          SizedBox(height: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -317,7 +343,7 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 12),
               Row(
                 children: [
                   const Text(
@@ -333,7 +359,7 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
-                      color: green,
+                      color: blue,
                     ),
                   ),
                 ],
@@ -342,30 +368,6 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-    );
-  }
-
-  Row appBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Четверг', style: ts),
-            Text('21 Апреля, 2022', style: ts),
-          ],
-        ),
-        Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-            image: AssetImage('images/Kuran.png'),
-            fit: BoxFit.contain,
-          )),
-        ),
-      ],
     );
   }
 }

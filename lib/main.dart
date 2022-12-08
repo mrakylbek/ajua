@@ -1,5 +1,16 @@
-import 'package:ajua_namaz_1/home_page.dart';
+import 'package:ajua_namaz_1/constants/colors.dart';
+import 'package:ajua_namaz_1/screens/fanjr/homeFanjr.dart';
+import 'package:ajua_namaz_1/screens/home_page/home_page.dart';
+import 'package:ajua_namaz_1/screens/kuran/home_kuran.dart';
+import 'package:ajua_namaz_1/screens/learn_namaz/home_learn_namaz.dart';
+import 'package:ajua_namaz_1/screens/learn_namaz/learn_namaz_tile.dart';
+import 'package:ajua_namaz_1/screens/lichnye_dannye/lichnye_dannie.dart';
+import 'package:ajua_namaz_1/screens/zikr/home_zikr_page.dart';
+import 'package:ajua_namaz_1/screens/zikr/zikr_tile_page.dart';
 import 'package:flutter/material.dart';
+
+import 'screens/kuran/home_sura_page.dart';
+import 'screens/tablitsa_for_month/home_tablitsa_for_month.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,8 +36,10 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        // appBarTheme: AppBarTheme(color: white.withOpacity(0)),
       ),
       home: HomePage(),
+      // home: TablitsaMonth(),
     );
   }
 }

@@ -1,3 +1,6 @@
+import '../../constants/colors.dart';
+import 'package:ajua_namaz_1/screens/lichnye_dannye/lichnye_app_bar.dart';
+import 'package:ajua_namaz_1/screens/lichnye_dannye/lichnye_dannie.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -74,13 +77,14 @@ class _CarouselBodyState extends State<CarouselBody> {
                     // shape: BoxShape.circle,
                     borderRadius: BorderRadius.circular(20),
                     color: activePage == index
-                        ? Color(0xFF2DC36A)
+                        // ? Color(0xFF2DC36A)
+                        ? blue
                         : Color(0xFFD9D9D9),
                   ),
                 );
               }).toList(),
             ),
-          )
+          ),
         ],
       ),
     );
