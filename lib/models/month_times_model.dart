@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-class MonthTomes extends Equatable {
+class MonthTimes extends Equatable {
   Map<String, Map<String, dynamic>> timesPerMonth;
-  MonthTomes({
+  MonthTimes({
     required this.timesPerMonth,
   });
 
@@ -19,8 +19,8 @@ class MonthTomes extends Equatable {
     };
   }
 
-  factory MonthTomes.fromMap(Map<String, dynamic> map) {
-    return MonthTomes(
+  factory MonthTimes.fromMap(Map<String, dynamic> map) {
+    return MonthTimes(
       timesPerMonth: Map<String, Map<String, dynamic>>.from(
           (map['timesPerMonth'] as Map<String, Map<String, dynamic>>)),
     );
@@ -28,6 +28,6 @@ class MonthTomes extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory MonthTomes.fromJson(String source) =>
-      MonthTomes.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory MonthTimes.fromJson(String source) =>
+      MonthTimes.fromMap(json.decode(source) as Map<String, dynamic>);
 }

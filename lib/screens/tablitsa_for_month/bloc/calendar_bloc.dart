@@ -13,16 +13,19 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
   final ApiProvider _apiProvider = ApiProvider();
 
   CalendarBloc() : super(CalendarLoading()) {
-    on<Load>((event, emit) async {
+    on<CalendarLoadEvent>((event, emit) async {
       emit(CalendarLoading());
       try {
-        print('Started Profile Page Bloc');
+        print('Started Calendar Bloc');
         // final profilePage = await _profileRepository.getProfile(idofProfile);
-        final timesPerMonth = await _apiProvider.getTimes(event.month);
+        final timesPerMonth =
+            await _apiProvider.getTimes(event.month, event.year);
         // print(profilePage);
         // print(profilePage.urlToAvatar);
         // print('Profile Page Bloc success');
-        emit(CalendarLoaded(timesPerMonth: timesPerMonth));
+        timesPerMonth.isNotEmpty
+            ? emit(CalendarLoaded(timesPerDayInMonth: timesPerMonth))
+            : null;
       } catch (e) {
         print('Oshibka v bloce');
         print(e);

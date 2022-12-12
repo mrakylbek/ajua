@@ -9,9 +9,9 @@ abstract class CalendarState extends Equatable {}
 // class CalendarInitial extends CalendarState {}
 
 class CalendarLoaded extends CalendarState {
-  final Map<String, Map<String, dynamic>> timesPerMonth;
+  final Map<int, Map<String, dynamic>> timesPerDayInMonth;
   CalendarLoaded({
-    required this.timesPerMonth,
+    required this.timesPerDayInMonth,
   });
   @override
   // TODO: implement props
@@ -19,14 +19,14 @@ class CalendarLoaded extends CalendarState {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'timesPerMonth': timesPerMonth,
+      'timesPerMonth': timesPerDayInMonth,
     };
   }
 
   factory CalendarLoaded.fromMap(Map<String, dynamic> map) {
     return CalendarLoaded(
-      timesPerMonth: Map<String, Map<String, dynamic>>.from(
-          (map['timesPerMonth'] as Map<String, Map<String, dynamic>>)),
+      timesPerDayInMonth: Map<int, Map<String, dynamic>>.from(
+          (map['timesPerMonth'] as Map<int, Map<String, dynamic>>)),
     );
   }
 
@@ -39,5 +39,5 @@ class CalendarLoaded extends CalendarState {
 class CalendarLoading extends CalendarState {
   @override
   // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [];
 }

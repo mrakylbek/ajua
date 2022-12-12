@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ApiProvider {
@@ -12,17 +11,21 @@ class ApiProvider {
 
   ApiProvider._internal();
 
-  Map<String, Map<String, dynamic>> timesPerMonth = {};
-  String baseUrl =
-      'https://api.muftyat.kz/prayer-times/2022/43.238293/76.945465?format=json';
+  Map<int, Map<String, dynamic>> timesPerMonth = {};
+  String baseUrl_1 = 'https://api.muftyat.kz/prayer-times/';
+  String baseUrl_2 = '/43.238293/76.945465?format=json';
 
-  Future<Map<String, Map<String, dynamic>>> getTimes(int month) async {
+  Future<Map<int, Map<String, dynamic>>> getTimes(int month, int year) async {
+    String url = baseUrl_1 + year.toString() + baseUrl_2;
+    // print(url);
+    // print(month);
+    // print(year);
     final days = getDifDays(month);
-
+    timesPerMonth = {};
     // final response = http.Response();
     try {
-      final response = await http.get(Uri.parse(baseUrl));
-      print('Got tesponse');
+      final response = await http.get(Uri.parse(url));
+      // print('Got response');
       // print(jsonDecode(utf8.decode(response.bodyBytes)));
       // Map<String, dynamic> times =
       //     jsonDecode(utf8.decode(response.bodyBytes))['result'][indexOfToday];
@@ -43,13 +46,13 @@ class ApiProvider {
           'maghrib': maghrib,
           'isha': isha,
         };
-        timesPerMonth[j.toString()] = timesPerDay;
+        timesPerMonth[j] = timesPerDay;
         j++;
       }
-      print('after cycle');
-      timesPerMonth.forEach(
-        (k, v) => print('${k}: ${v}'),
-      );
+      // print('after cycle');
+      // timesPerMonth.forEach(
+      //   (k, v) => print('${k}: ${v}'),
+      // );
       // print(timesPerMonth);
       // print(times);
       // var t = jsonDecode(utf8.decode(response.bodyBytes))['result'][0]['asr'];
@@ -79,12 +82,12 @@ class ApiProvider {
         .toUtc()
         .difference(DateTime(yearNow, 1, 1))
         .inDays;
-    print(daysTillMonth);
+    // print(daysTillMonth);
     final int daysTillNextMonth = DateTime(yearNow, month + 1)
         .toUtc()
         .difference(DateTime(yearNow, 1, 1))
         .inDays;
-    print(daysTillNextMonth);
+    // print(daysTillNextMonth);
     return [daysTillMonth, daysTillNextMonth];
   }
 }
