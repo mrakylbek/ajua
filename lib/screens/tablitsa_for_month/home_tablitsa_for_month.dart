@@ -93,7 +93,9 @@ class _TablitsaMonthState extends State<TablitsaMonth> {
                         ),
                       )
                     else
-                      Center(
+                      Container(
+                        margin: EdgeInsets.only(top: 100),
+                        alignment: Alignment.center,
                         child: CircularProgressIndicator(),
                       ),
                     SizedBox(height: 20),
