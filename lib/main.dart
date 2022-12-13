@@ -10,6 +10,7 @@ import 'package:ajua_namaz_1/screens/zikr/home_zikr_page.dart';
 import 'package:ajua_namaz_1/screens/zikr/zikr_tile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'screens/kuran/home_sura_page.dart';
 import 'screens/tablitsa_for_month/home_tablitsa_for_month.dart';
@@ -28,25 +29,31 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<CalendarBloc>(create: (context) => CalendarBloc()),
       ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          primarySwatch: Colors.blue,
-          // appBarTheme: AppBarTheme(color: white.withOpacity(0)),
-        ),
-        home: HomePage(),
-        // home: TablitsaMonth(),
-      ),
+      child: ScreenUtilInit(
+          designSize: const Size(390, 844),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          builder: (context, Widget? child) {
+            return MaterialApp(
+              title: 'Flutter Demo',
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                // This is the theme of your application.
+                //
+                // Try running your application with "flutter run". You'll see the
+                // application has a blue toolbar. Then, without quitting the app, try
+                // changing the primarySwatch below to Colors.green and then invoke
+                // "hot reload" (press "r" in the console where you ran "flutter run",
+                // or simply save your changes to "hot reload" in a Flutter IDE).
+                // Notice that the counter didn't reset back to zero; the application
+                // is not restarted.
+                primarySwatch: Colors.blue,
+                // appBarTheme: AppBarTheme(color: white.withOpacity(0)),
+              ),
+              home: HomePage(),
+              // home: TablitsaMonth(),
+            );
+          }),
     );
   }
 }

@@ -2,10 +2,11 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:ajua_namaz_1/constants/textStyles.dart';
-import 'package:ajua_namaz_1/screens/home_page/alert_nachat.dart';
+// import 'package:ajua_namaz_1/constants/textStyles.dart';
+// import 'package:ajua_namaz_1/screens/home_page/alert_nachat.dart';
 import 'package:ajua_namaz_1/screens/home_page/alert_vremya.dart';
 import 'package:ajua_namaz_1/screens/home_page/carousel_clider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // import '../bottomNavBar.dart';
 import '../../constants/colors.dart';
@@ -16,8 +17,16 @@ TextStyle ts = const TextStyle(
   color: Color(0xff333333),
 );
 // Color green = const Color(0xff00CF91);
-List vremya = ['Фаджр', 'Восход', 'Зухр', 'Аср', 'Магриб', 'Иша'];
+List vremya = [
+  'Фаджр',
+  // 'Восход',
+  'Зухр',
+  'Аср',
+  'Магриб',
+  'Иша',
+];
 bool turn = true;
+List<bool> soundOnOff = [false, true, false, true, false];
 
 class HomeBody extends StatefulWidget {
   const HomeBody({super.key});
@@ -49,11 +58,11 @@ class _HomeBodyState extends State<HomeBody> {
                 ),
               ),
               CarouselBody(tile_body: carousel_tile()),
-              // Container(
-              //   width: 150,
-              //   height: 200,
-              //   color: Colors.yellow,
-              // ),
+              Container(
+                width: 150,
+                height: 75,
+                // color: Colors.yellow,
+              ),
             ],
           ),
         ),
@@ -130,6 +139,7 @@ class _HomeBodyState extends State<HomeBody> {
         Container(
           // margin: EdgeInsets.only(top: (maxWidth - 140) / 2),
           // margin: EdgeInsets.only(top: (maxWidth - 100) / 2),
+          height: 390.h,
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
@@ -181,18 +191,28 @@ class _HomeBodyState extends State<HomeBody> {
               ),
             ),
           ),
-          Container(
-            width: 24,
-            height: 24,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage(
-                i == 0
-                    ? 'assets/images/sound_off_green.png'
-                    : 'assets/images/sound_off_black.png',
-              ),
-              fit: BoxFit.contain,
-            )),
+          InkWell(
+            onTap: () {
+              print('Sound on off');
+              soundOnOff[i] = !soundOnOff[i];
+            },
+            child: Container(
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                image: AssetImage(
+                  i == 0
+                      ? soundOnOff[i]
+                          ? 'assets/images/sound_on_blue.png'
+                          : 'assets/images/sound_off_blue.png'
+                      : soundOnOff[i]
+                          ? 'assets/images/sound_on_black.png'
+                          : 'assets/images/sound_off_black.png',
+                ),
+                fit: BoxFit.contain,
+              )),
+            ),
           ),
         ],
       ),
@@ -210,13 +230,16 @@ class _HomeBodyState extends State<HomeBody> {
             fit: BoxFit.contain,
           ),
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            fajr(maxWidth),
-            SizedBox(height: 14),
-            time(maxWidth),
-          ],
+        SizedBox(
+          height: 390.h,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              fajr(maxWidth),
+              // SizedBox(height: 14),
+              time(maxWidth),
+            ],
+          ),
         )
       ],
     );
@@ -225,6 +248,7 @@ class _HomeBodyState extends State<HomeBody> {
   Widget time(double maxWidth) {
     return Container(
       // padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
+      height: 177.h,
       padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -245,14 +269,14 @@ class _HomeBodyState extends State<HomeBody> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
-            height: 24,
+            height: 24.h,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Icon(
                   Icons.access_time,
                   color: blue,
-                  size: 24,
+                  size: 24.h,
                 ),
                 Switch(
                   value: turn,
@@ -270,10 +294,10 @@ class _HomeBodyState extends State<HomeBody> {
               ],
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 20.h),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
                 '02:34',
                 style: TextStyle(
@@ -281,7 +305,7 @@ class _HomeBodyState extends State<HomeBody> {
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 16.h),
               Text(
                 'Время до намаза ',
                 style: TextStyle(
@@ -290,7 +314,7 @@ class _HomeBodyState extends State<HomeBody> {
                   color: Color(0xffB9B9B9),
                 ),
               ),
-              SizedBox(height: 4),
+              SizedBox(height: 4.h),
             ],
           )
         ],
@@ -300,6 +324,7 @@ class _HomeBodyState extends State<HomeBody> {
 
   Widget fajr(double maxWidth) {
     return Container(
+      height: 184.h,
       padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -332,7 +357,7 @@ class _HomeBodyState extends State<HomeBody> {
               fit: BoxFit.contain,
             ),
           ),
-          SizedBox(height: 12),
+          SizedBox(height: 12.h),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -343,7 +368,7 @@ class _HomeBodyState extends State<HomeBody> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(height: 12),
+              SizedBox(height: 12.h),
               Row(
                 children: [
                   const Text(
