@@ -15,7 +15,6 @@ import 'alert_vremya.dart';
 //   'Иша',
 // ];
 bool turn = true;
-List<bool> soundOnOff = [false, true, false, true, false];
 
 class SecondColumn extends StatefulWidget {
   const SecondColumn({
@@ -39,9 +38,11 @@ class _SecondColumnState extends State<SecondColumn> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (widget.isLoaded) {
-      indexNextTime = widget.tr!.nextIndex;
-    }
+    // if (widget.isLoaded) {
+    // try {
+    indexNextTime = widget.tr!.nextIndex;
+    // } catch (e) {}
+    // }
   }
 
   @override
@@ -135,7 +136,7 @@ class _SecondColumnState extends State<SecondColumn> {
               decoration: BoxDecoration(
                   image: DecorationImage(
                 image: AssetImage(
-                  i == 0
+                  i == indexNextTime
                       ? soundOnOff[i]
                           ? 'assets/images/sound_on_blue.png'
                           : 'assets/images/sound_off_blue.png'

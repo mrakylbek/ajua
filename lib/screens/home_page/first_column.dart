@@ -45,10 +45,11 @@ class _FirstColumnState extends State<FirstColumn> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    bool isL = widget.isLoaded;
     // if (isL) {
     print('FIRST COLUMN ISLOADED ' + widget.isLoaded.toString());
-    nameNextPray = vremya[widget.tr!.nextIndex];
+    // try {
+    index = widget.tr!.nextIndex == 6 ? 0 : widget.tr!.nextIndex;
+    nameNextPray = vremya[index];
     index = widget.tr!.nextIndex;
     timeNextPray = widget.tr!.fajrTime!.length != 1
         ? widget.tr!.fajrTime
@@ -59,39 +60,46 @@ class _FirstColumnState extends State<FirstColumn> {
     drInTimeBody = dr.inHours < 10 ? '0' : '';
     drInTimeBody = drInTimeBody + dr.toString().substring(0, 4);
     startTimer();
+    // } catch (e) {
+    //   print('ERROR IN FIRST COLUMN');
+    //   print(e);
+    // }
     // }
   }
 
   void startTimer() {
-    if (_timer != null) {
-      _timer!.cancel();
-      _timer = Timer(Duration(seconds: 0), () {});
-    } else {
-      _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
-        drseconds = drseconds - 1;
+    if (widget.isLoaded) {
+      print('TIMER STARTED');
+      if (_timer != null) {
+        _timer!.cancel();
+        _timer = Timer(Duration(seconds: 0), () {});
+      } else {
+        _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+          drseconds = drseconds - 1;
 
-        if (drseconds % 60 == 0) {
-          print('object');
-          setState(() {
-            minutes = isMinutesZero ? minutes - 1 : minutes;
-            dr = Duration(minutes: minutes);
-            // drInTimeBody = Duration(minutes: minutes).toString().substring(0, 4);
-            drInTimeBody = dr.inHours < 10 ? '0' : '';
-            drInTimeBody = drInTimeBody + dr.toString().substring(0, 4);
-            isMinutesZero = true;
-          });
-          // print(minutes);
-          print(Duration(seconds: drseconds));
-          // print(
-          //     Duration(milliseconds: widget.tr!.drToNextTime.inMilliseconds - 1));
-        }
-        // if (drseconds % 60 == 0) {
-        //   setState(() {});
-        // }
-        if (drseconds == 2) {
-          widget.callBloc;
-        }
-      });
+          if (drseconds % 60 == 0) {
+            print('object');
+            setState(() {
+              minutes = isMinutesZero ? minutes - 1 : minutes;
+              dr = Duration(minutes: minutes);
+              // drInTimeBody = Duration(minutes: minutes).toString().substring(0, 4);
+              drInTimeBody = dr.inHours < 10 ? '0' : '';
+              drInTimeBody = drInTimeBody + dr.toString().substring(0, 4);
+              isMinutesZero = true;
+            });
+            // print(minutes);
+            print(Duration(seconds: drseconds));
+            // print(
+            //     Duration(milliseconds: widget.tr!.drToNextTime.inMilliseconds - 1));
+          }
+          // if (drseconds % 60 == 0) {
+          //   setState(() {});
+          // }
+          if (drseconds == 2) {
+            widget.callBloc;
+          }
+        });
+      }
     }
   }
 
@@ -167,11 +175,13 @@ class _FirstColumnState extends State<FirstColumn> {
                         size: 24.h,
                       ),
                       Switch(
-                        value: turn,
+                        // value: turn,
+                        value: soundOnOff[index],
                         onChanged: (val) {
                           print('turned to $val');
                           setState(() {
                             turn = !turn;
+                            soundOnOff[index] = !soundOnOff[index];
                           });
                         },
                         activeColor: Colors.white,

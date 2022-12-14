@@ -2,6 +2,7 @@
 
 import 'package:ajua_namaz_1/constants/data.dart';
 import 'package:ajua_namaz_1/constants/textStyles.dart';
+import 'package:ajua_namaz_1/models/today_pray_times_model.dart';
 import 'package:ajua_namaz_1/screens/compass/home_compass_page.dart';
 import 'package:ajua_namaz_1/screens/home_page/alert_nachat.dart';
 import 'package:ajua_namaz_1/screens/home_page/alert_vremya.dart';
@@ -43,6 +44,7 @@ int today = DateTime.now().day;
 int month = DateTime.now().month;
 int weekDay = DateTime.now().weekday;
 bool isLoaded = false;
+List<bool> soundOnOff = [false, true, false, true, false];
 
 class _HomePageState extends State<HomePage> {
   void callBloc() {
@@ -82,8 +84,18 @@ class _HomePageState extends State<HomePage> {
             ? HomeBody(
                 isLoaded: true,
                 tr: state.tr,
+                callBloc: callBloc,
               )
-            : HomeBody(isLoaded: false),
+            : HomeBody(
+                isLoaded: false,
+                // tr: TodayPrayTimesModel(
+                //   timesPerDay: {},
+                //   nextIndex: 6,
+                //   drToNextTime: Duration(seconds: 0),
+                //   fajrTime: '24:00',
+                // ),
+                // callBloc: callBloc,
+              ),
       );
     });
   }

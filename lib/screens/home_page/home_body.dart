@@ -91,11 +91,49 @@ class _HomeBodyState extends State<HomeBody> {
                             tr: widget.tr!,
                             callBloc: widget.callBloc,
                           )
-                        : FirstColumn(
-                            isLoaded: widget.isLoaded,
-                            maxW: maxWidth,
-                            // tr: widget.isLoaded ? widget.tr! : null,
+                        : Column(
+                            children: [
+                              SizedBox(
+                                width: (maxWidth - 40 - 25) / 2,
+                                child: Image(
+                                  image:
+                                      AssetImage('assets/images/mosque_1.png'),
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 370.h,
+                                width: (maxWidth - 40 - 25) / 2,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      height: 167.h,
+                                      width: double.infinity,
+                                      color: white,
+                                      // padding: EdgeInsets.all(50),
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                            color: blue),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 167.h,
+                                      width: double.infinity,
+                                      color: white,
+                                      // padding: EdgeInsets.all(50),
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                            color: blue),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
+
                     // secondColumn(maxWidth),
                     widget.isLoaded
                         ? SecondColumn(
@@ -104,12 +142,30 @@ class _HomeBodyState extends State<HomeBody> {
                             // tr: widget.tr!,
                             tr: widget.tr!,
                           )
-                        : SecondColumn(
-                            isLoaded: widget.isLoaded,
-                            maxW: maxWidth,
-                            // tr: widget.tr!,
-                            // tr: widget.isLoaded ? widget.tr! : null,
-                          )
+                        : Column(
+                            children: [
+                              SizedBox(
+                                width: (maxWidth - 40 - 25) / 2,
+                                child: Image(
+                                  image:
+                                      AssetImage('assets/images/mosque_2.png'),
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 370.h,
+                                width: (maxWidth - 40 - 25) / 2,
+                                child: Container(
+                                  height: 370.h,
+                                  width: double.infinity,
+                                  color: white,
+                                  padding: EdgeInsets.all(50),
+                                  alignment: Alignment.center,
+                                  child: CircularProgressIndicator(color: blue),
+                                ),
+                              ),
+                            ],
+                          ),
                   ],
                 ),
               )
