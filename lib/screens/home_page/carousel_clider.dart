@@ -1,3 +1,5 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../constants/colors.dart';
 import 'package:ajua_namaz_1/screens/lichnye_dannye/lichnye_app_bar.dart';
 import 'package:ajua_namaz_1/screens/lichnye_dannye/lichnye_dannie.dart';
@@ -39,7 +41,7 @@ class _CarouselBodyState extends State<CarouselBody> {
         children: [
           CarouselSlider(
             options: CarouselOptions(
-                height: 140.0,
+                height: 140.0.h,
                 autoPlay: true,
                 enlargeCenterPage: true,
                 viewportFraction: 1,

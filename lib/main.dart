@@ -1,5 +1,6 @@
 import 'package:ajua_namaz_1/constants/colors.dart';
 import 'package:ajua_namaz_1/screens/fanjr/homeFanjr.dart';
+import 'package:ajua_namaz_1/screens/home_page/bloc/get_pray_times_bloc.dart';
 import 'package:ajua_namaz_1/screens/home_page/home_page.dart';
 import 'package:ajua_namaz_1/screens/kuran/home_kuran.dart';
 import 'package:ajua_namaz_1/screens/learn_namaz/home_learn_namaz.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<CalendarBloc>(create: (context) => CalendarBloc()),
+        BlocProvider<GetPrayTimesBloc>(create: (context) => GetPrayTimesBloc()),
       ],
       child: ScreenUtilInit(
           designSize: const Size(390, 844),

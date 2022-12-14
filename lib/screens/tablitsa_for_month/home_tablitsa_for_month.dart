@@ -96,7 +96,7 @@ class _TablitsaMonthState extends State<TablitsaMonth> {
                       Container(
                         margin: EdgeInsets.only(top: 100),
                         alignment: Alignment.center,
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(color: blue),
                       ),
                     SizedBox(height: 20),
                   ],

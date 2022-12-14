@@ -19,7 +19,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
         print('Started Calendar Bloc');
         // final profilePage = await _profileRepository.getProfile(idofProfile);
         final timesPerMonth =
-            await _apiProvider.getTimes(event.month, event.year);
+            await _apiProvider.getTimesForTablitsa(event.month, event.year);
         // print(profilePage);
         // print(profilePage.urlToAvatar);
         // print('Profile Page Bloc success');
@@ -27,7 +27,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
             ? emit(CalendarLoaded(timesPerDayInMonth: timesPerMonth))
             : null;
       } catch (e) {
-        print('Oshibka v bloce');
+        print('Oshibka v Calendar bloce');
         print(e);
       }
     });

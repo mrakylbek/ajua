@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers
 
+import 'package:ajua_namaz_1/constants/data.dart';
 import 'package:ajua_namaz_1/constants/textStyles.dart';
 import 'package:ajua_namaz_1/screens/compass/home_compass_page.dart';
 import 'package:ajua_namaz_1/screens/home_page/alert_nachat.dart';
@@ -10,11 +11,13 @@ import 'package:ajua_namaz_1/screens/kuran/home_kuran.dart';
 import 'package:ajua_namaz_1/screens/learn_namaz/home_learn_namaz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bottomNavBar.dart';
 import '../../constants/colors.dart';
 import '../tablitsa_for_month/home_tablitsa_for_month.dart';
 import '../zikr/home_zikr_page.dart';
+import 'bloc/get_pray_times_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,24 +32,60 @@ TextStyle ts = const TextStyle(
   color: Color(0xff333333),
 );
 // Color green = const Color(0xff00CF91);
-List vremya = ['Фаджр', 'Восход', 'Зухр', 'Аср', 'Магриб', 'Иша'];
+// List vremya = ['Фаджр', 'Восход', 'Зухр', 'Аср', 'Магриб', 'Иша'];
 bool turn = true;
 BoxDecoration bd = BoxDecoration(
   borderRadius: BorderRadius.circular(13),
   color: white,
 );
+int year = DateTime.now().year;
+int today = DateTime.now().day;
+int month = DateTime.now().month;
+int weekDay = DateTime.now().weekday;
+bool isLoaded = false;
 
 class _HomePageState extends State<HomePage> {
+  void callBloc() {
+    context.read<GetPrayTimesBloc>().add(GetPrayTimesLoadEvent());
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    callBloc();
+  }
+
   @override
   Widget build(BuildContext context) {
     double maxWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      backgroundColor: whitef9,
-      appBar: appBar(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: navButton(maxWidth, context),
-      body: HomeBody(),
-    );
+    return BlocBuilder<GetPrayTimesBloc, GetPrayTimesState>(
+        builder: (context, state) {
+      // if (state is GetPrayTimesLoading) {
+      //   // setState(() {
+      //   setState(() {
+      //     isLoaded = false;
+      //   });
+      //   // });
+      // }
+      // if (state is GetPrayTimesLoaded) {
+      //   // setState(() {
+      //   isLoaded = true;
+      //   // });
+      // }
+      return Scaffold(
+        backgroundColor: whitef9,
+        appBar: appBar(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: navButton(maxWidth, context),
+        body: state is GetPrayTimesLoaded
+            ? HomeBody(
+                isLoaded: true,
+                tr: state.tr,
+              )
+            : HomeBody(isLoaded: false),
+      );
+    });
   }
 
   SafeArea navButton(double maxWidth, BuildContext context) {
@@ -498,8 +537,8 @@ class _HomePageState extends State<HomePage> {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Четверг', style: ts),
-          Text('21 Апреля, 2022', style: ts),
+          Text(weekDays[weekDay - 1], style: ts),
+          Text('$today ${months[month - 1]}, $year', style: ts),
         ],
       ),
       actions: [
