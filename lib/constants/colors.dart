@@ -43,3 +43,4 @@ const Color redff0 = Color(0xffFF0000);
 Color? green300 = Colors.green[300];
 const Color greenNastroyka = Color(0xffB5FBDD);
 Color blue = const Color(0xff009DBF);
+Color blue2 = Color.fromARGB(255, 153, 228, 245);

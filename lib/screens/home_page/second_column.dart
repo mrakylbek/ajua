@@ -1,10 +1,14 @@
+// ignore_for_file: curly_braces_in_flow_control_structures
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/data.dart';
 import '../../models/today_pray_times_model.dart';
 import 'alert_vremya.dart';
+import 'switch_bloc/switch_notification_bloc.dart';
 
 // List vremya = [
 //   'Фаджр',
@@ -15,6 +19,7 @@ import 'alert_vremya.dart';
 //   'Иша',
 // ];
 bool turn = true;
+List<bool> sounds = [];
 
 class SecondColumn extends StatefulWidget {
   const SecondColumn({
@@ -43,14 +48,26 @@ class _SecondColumnState extends State<SecondColumn> {
     indexNextTime = widget.tr!.nextIndex;
     // } catch (e) {}
     // }
+    context.read<SwitchNotificationBloc>().add(SwitchLoadEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    return secondColumn(widget.maxW);
+    return BlocBuilder<SwitchNotificationBloc, SwitchNotificationState>(
+        builder: (context, state) {
+      if (state is SwitchLoadedState) {
+        // setState(() {
+        sounds = state.soundOnOff!;
+        // });
+        return secondColumn(widget.maxW, state.soundOnOff!);
+      } else
+        return Center(
+          child: CircularProgressIndicator(color: blue),
+        );
+    });
   }
 
-  Widget secondColumn(double maxWidth) {
+  Widget secondColumn(double maxWidth, List<bool> sounds) {
     return Column(
       children: [
         SizedBox(
@@ -79,23 +96,31 @@ class _SecondColumnState extends State<SecondColumn> {
               )
             ],
           ),
-          child: widget.isLoaded
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: List.generate(
-                    vremya.length,
-                    (index) => vremya_tile(index, maxWidth),
-                  ),
-                )
-              : Center(
-                  child: CircularProgressIndicator(color: blue),
-                ),
+          child:
+              // widget.isLoaded
+              //     ?
+              Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(
+              // vremya.length,
+              5,
+              (index) => vremya_tile(
+                index,
+                maxWidth,
+                sounds[index],
+              ),
+            ),
+          )
+          // : Center(
+          //     child: CircularProgressIndicator(color: blue),
+          //   )
+          ,
         )
       ],
     );
   }
 
-  Widget vremya_tile(int i, double maxWidth) {
+  Widget vremya_tile(int i, double maxWidth, bool isSound) {
     return Container(
       // margin: ,
       width: (maxWidth - 40 - 12) / 2,
@@ -113,7 +138,7 @@ class _SecondColumnState extends State<SecondColumn> {
               );
             },
             child: Text(
-              vremya[i],
+              nazvaniePrayTime[i],
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -124,10 +149,17 @@ class _SecondColumnState extends State<SecondColumn> {
           InkWell(
             onTap: () {
               // print(soundOnOff[i]);
-              setState(() {
-                print('Sound on off');
-                soundOnOff[i] = !soundOnOff[i];
-              });
+              // setState(() {
+              //   print('Sound on off');
+              //   soundOnOff[i] = !soundOnOff[i];
+              // });
+              isSound
+                  ? context
+                      .read<SwitchNotificationBloc>()
+                      .add(SwitchOffEvent(indexOfPrayTime: i))
+                  : context
+                      .read<SwitchNotificationBloc>()
+                      .add(SwitchOnEvent(indexOfPrayTime: i));
               // print(soundOnOff[i]);
             },
             child: Container(
@@ -137,10 +169,10 @@ class _SecondColumnState extends State<SecondColumn> {
                   image: DecorationImage(
                 image: AssetImage(
                   i == indexNextTime
-                      ? soundOnOff[i]
+                      ? sounds[i]
                           ? 'assets/images/sound_on_blue.png'
                           : 'assets/images/sound_off_blue.png'
-                      : soundOnOff[i]
+                      : sounds[i]
                           ? 'assets/images/sound_on_black.png'
                           : 'assets/images/sound_off_black.png',
                 ),

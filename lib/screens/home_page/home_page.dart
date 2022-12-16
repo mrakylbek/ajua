@@ -79,7 +79,11 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: whitef9,
         appBar: appBar(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: navButton(maxWidth, context),
+        floatingActionButton: navButton(
+            maxWidth,
+            context,
+            state is GetPrayTimesLoaded,
+            state is GetPrayTimesLoaded ? state.tr : null),
         body: state is GetPrayTimesLoaded
             ? HomeBody(
                 isLoaded: true,
@@ -94,13 +98,18 @@ class _HomePageState extends State<HomePage> {
                 //   drToNextTime: Duration(seconds: 0),
                 //   fajrTime: '24:00',
                 // ),
-                // callBloc: callBloc,
+                callBloc: callBloc,
               ),
       );
     });
   }
 
-  SafeArea navButton(double maxWidth, BuildContext context) {
+  SafeArea navButton(
+    double maxWidth,
+    BuildContext context,
+    bool isLoaded,
+    TodayPrayTimesModel? tr,
+  ) {
     return SafeArea(
       child: Container(
         // height: 80,
@@ -117,11 +126,17 @@ class _HomePageState extends State<HomePage> {
               left: (MediaQuery.of(context).size.width - 72 - 40) / 2,
               child: InkWell(
                 onTap: () {
-                  showGeneralDialog(
-                    context: context,
-                    pageBuilder: (((context, animation, secondaryAnimation) =>
-                        AlertStart())),
-                  );
+                  if (isLoaded) {
+                    print('Tapped nachat');
+                    showGeneralDialog(
+                      context: context,
+                      pageBuilder: (((context, animation, secondaryAnimation) =>
+                          AlertStart(
+                            tr: tr!,
+                          ))),
+                    );
+                  } else
+                    null;
                 },
                 child: Container(
                   // padding: EdgeInsets.only(bottom: 6),

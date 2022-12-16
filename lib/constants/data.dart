@@ -21,11 +21,14 @@ List<String> weekDays = [
   'Суббота',
   'Воскресенье',
 ];
-List vremya = [
+List nazvaniePrayTime = [
   'Фаджр',
   // 'Восход',
   'Зухр',
   'Аср',
   'Магриб',
   'Иша',
+  '',
+  ''
 ];
+List<bool> soundOnOff = [true, true, false, true, false, false, false];
